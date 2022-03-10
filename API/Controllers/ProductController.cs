@@ -4,7 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using Infrastructure.Interfaces;
+using Core.Interfaces;
+using Core.Entities;
 
 namespace API.Controllers
 {
@@ -21,10 +22,17 @@ namespace API.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProdcut()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProdcut(int id)
         {
-            return Ok(await _repo.GetProductByIdAsync(1));
+            return await _repo.GetProductByIdAsync(id);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProdcuts()
+        {
+            return Ok(await _repo.GetProductsAsync());
         }
 
     }
