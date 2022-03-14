@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
@@ -30,8 +33,11 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
+            
+            Expression<Func<Product,ProductBrand>> ex = (Product p) => p.ProductBrand;
+            
             return await _context.Products
-                .Include(p => p.ProductType)
+                .Include(ex)
                 .Include(p => p.ProductBrand)
                 .ToListAsync();
         }

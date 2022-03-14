@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Core.Entities;
+using Core.Specifications;
 
 namespace API.Controllers
 {
@@ -15,23 +16,27 @@ namespace API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _repo;
+        private readonly IGenericRepository<Product> _prodcutRepo;
 
-        public ProductsController(IProductRepository repo)
+        public ProductsController(IProductRepository repo, IGenericRepository<Product> prodcutRepo)
         {
+            this._prodcutRepo = prodcutRepo;
             this._repo = repo;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProdcut(int id)
         {
-            return await _repo.GetProductByIdAsync(id);
+            return await _prodcutRepo.GetByIdAsync(id);
         }
 
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProdcuts()
         {
-            return Ok(await _repo.GetProductsAsync());
+            var spec = new ProductsWithTypesAndBrandsSpecification();
+            
+            return Ok(await _prodcutRepo.ListAsync(spec));
         }
 
         [HttpGet("brands")]
