@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Core.Entities;
 using Core.Specifications;
+using AutoMapper;
+using API.Dtos;
 
 namespace API.Controllers
 {
@@ -17,17 +19,25 @@ namespace API.Controllers
     {
         private readonly IProductRepository _repo;
         private readonly IGenericRepository<Product> _prodcutRepo;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository repo, IGenericRepository<Product> prodcutRepo)
+        public ProductsController(IProductRepository repo,
+                                  IGenericRepository<Product> prodcutRepo,
+                                  IMapper mapper)
         {
+            this._mapper = mapper;
             this._prodcutRepo = prodcutRepo;
             this._repo = repo;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProdcut(int id)
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
-            return await _prodcutRepo.GetByIdAsync(id);
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+            var product = await _prodcutRepo.GetEntityWithSpec(spec);
+
+            return  _mapper.Map<Product, ProductToReturnDto>(product);          
         }
 
 
@@ -35,8 +45,10 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProdcuts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
-            
-            return Ok(await _prodcutRepo.ListAsync(spec));
+
+            var products = await _prodcutRepo.ListAsync(spec);
+
+            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
 
         [HttpGet("brands")]
