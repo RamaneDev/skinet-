@@ -58,6 +58,8 @@ namespace API
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseStaticFiles();
 
             //app.UseMyMiddleware(); test middelware / Filters executing inside middelwares arround actions
