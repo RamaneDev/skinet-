@@ -39,5 +39,17 @@
           <app-product-item [product]="item"></app-product-item>
         </div>
       </div>
+
+      <div class="d-flex justify-content-center" *ngIf="this.totalCount > 0">
+        <pagination          
+          [itemsPerPage]="this.shopParams.pageSize"
+          [totalItems]="this.totalCount"
+          (pageChanged)="onPageChanged($event)"  >
+       </pagination>
+      </div>
+     
     </section>
+
+
+  
   </div>
