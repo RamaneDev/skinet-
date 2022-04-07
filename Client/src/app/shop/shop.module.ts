@@ -18,9 +18,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     CommonModule,   
     SharedModule,
     RouterModule
-  ],
-  exports: [
-    ShopComponent
   ]
 })
 export class ShopModule { }
