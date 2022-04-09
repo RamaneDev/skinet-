@@ -52,7 +52,7 @@ namespace API
 
             app.UseSwaggerDocumention();
 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            app.UseStatusCodePagesWithReExecute("/errors/{0}"); // for end point doesn't existe this methode will be triggred
 
             app.UseHttpsRedirection();
 
