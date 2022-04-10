@@ -39,6 +39,13 @@ export class TestErrorComponent implements OnInit {
     })
   }
 
+  badRequestValidationError400() {
+    this.http.get(this.baseUrl + 'Buggy/badrequest/one&tow').subscribe({
+      next : (response) => console.log(response),
+      error : (error) => console.log(error)
+    })
+  }
+
 
 
 }
