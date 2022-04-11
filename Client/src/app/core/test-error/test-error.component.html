@@ -5,3 +5,7 @@
     <button (click)="badRequest400()" class="btn btn-outline-primary mr-2">BadRequest 400</button>
     <button (click)="badRequestValidationError400()" class="btn btn-outline-primary mr-2">BadRequest 400 Validation Error</button>
 </div>
+
+<ul class="text-danger mt-5">
+    <li *ngFor="let error of validationErros">{{error}}</li>
+</ul>
