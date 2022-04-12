@@ -1,8 +1,43 @@
-.btn-group {
-    width: 100%;
+.btn-svg {
+   height: 24px;
+   width: 39.1px;
+   transition: all .5s;
 }
 
-.btn {
-    width: 50%;
+.hover-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: rgba($color: #FFFFFF, $alpha: 0.5);
+    transition: all .5s;
+
+    & button {       
+        z-index: 1000;
+        transition: all .5s;
+    }
+
+    & .btn-svg{        
+        z-index: 1000;
+        transform: translateX(-20px);
+    }
+
+    & button:last-of-type {
+        transform: translateX(20px);
+    } 
    
+}
+
+.hover-overlay:hover {
+    opacity: 1;
+
+    & button {
+        transform: none;        
+    }
+
+    & .btn-svg {
+        transform: none;        
+    }
 }
