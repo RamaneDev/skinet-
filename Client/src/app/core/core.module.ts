@@ -12,7 +12,11 @@ import { SectionHeaderComponent } from './section-header/section-header.componen
 
 
 @NgModule({
-  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent],
+  declarations: [NavBarComponent, 
+                 TestErrorComponent, 
+                 NotFoundComponent, 
+                 ServerErrorComponent, 
+                 SectionHeaderComponent],
   imports: [
     CommonModule,
     RouterModule,
