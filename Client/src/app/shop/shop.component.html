@@ -5,6 +5,8 @@
  <div class="row">
     
   <section class="col-3">
+    <ng-container *ngIf="types && brands" >
+   
       <h5 class="text-warning ml-3 mt-4 mb-4">Sort</h5>
       <select class="custom-select mb-3" (change)="onSortSelected($event.target.value)">
           <option *ngFor="let sort of sortOptions" [value]="sort.value" [selected]="this.sort.value === this.shopParams.sort">{{sort.name}}</option>
@@ -25,8 +27,11 @@
             [class.active]="type.id === shopParams.typeId"
             >{{type.name}}</li>
       </ul>
-    </section>
+    </ng-container>
+  </section>
+    
     <section class="col-9">
+     <ng-container *ngIf="products" >
       <div class="d-flex justify-content-between align-items-center pb-2">
         
         <app-paging-header [pageNumber]="this.shopParams.pageNumber"
@@ -52,7 +57,7 @@
                    [totalCount]="this.totalCount"
                    (pagerChanged)="onPageChanged($event)"></app-pager>
       </div>
-     
+     </ng-container>
     </section>
 
 
