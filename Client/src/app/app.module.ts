@@ -1,6 +1,6 @@
+import { HomeModule } from './home/home.module';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error-intercetor';
-import { ShopModule } from './shop/shop.module';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,6 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
