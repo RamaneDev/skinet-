@@ -47,9 +47,11 @@
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex align-items-center">
-                                                <i class="fa fa-minus-circle text-warning mr-2" style="cursor: pointer; font-size: 2em;"></i>
+                                                <button (click)="decrementItemQuantity(item)" class="btn-svg"><i class="fa fa-minus-circle text-warning mr-2" style="cursor: pointer; font-size: 2em;">                                                    
+                                                </i></button>
                                                 <span class="font-weight-bold" style="font-size: 1.5em;"> {{item.quantity}} </span>
-                                                <i class="fa fa-plus-circle text-warning mx-2" style="cursor: pointer; font-size: 2em;"></i>
+                                                <button (click)="incrementItemQuantity(item)" class="btn-svg"><i class="fa fa-plus-circle text-warning mx-2" style="cursor: pointer; font-size: 2em;">
+                                                </i></button>
                                             </div>                                      
                                         </td>
                                         <td class="align-middle">
@@ -58,10 +60,9 @@
                                             </strong>
                                         </td>
                                         <td class="align-middle text-center">
-                                        <a class="text-danger">
-                                            <i class="fa fa-trash" style="font-size: 2em;">
-
-                                            </i>
+                                        <a>
+                                           <button (click)="removeBasketItem(item)" class="btn-svg"><i class="fa fa-trash text-danger" style="font-size: 2em;">
+                                            </i></button> 
                                         </a>
                                         </td>
                                     </tr>
@@ -70,9 +71,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-6 offset-6">
+                        <app-order-totals></app-order-totals>
+                        <a routerLink="/checkout" class="btn btn-outline-primary py-2 btn-block">Proceed to checkout</a>  
+                    </div>
+                    
+                </div>
             </div>
-        </div>      
-    </div>
+        </div>
+           
+    </div>   
 
 </div>
 
