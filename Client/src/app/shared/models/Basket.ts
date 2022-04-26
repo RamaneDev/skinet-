@@ -24,4 +24,11 @@ export class Basket implements IBasket {
 }
 
 
+export interface IBasketTotals {
+    shipping: number;
+    subtotal: number;
+    total: number;
+}
+
+
 
