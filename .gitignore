@@ -7,5 +7,5 @@ Infrastructure/bin
 Infrastructure/obj
 Infrastructure/Infrastructure/obj
 *.db
-API/skinet.db-wal
-API/skinet.db-shm
+*.db-wal
+*.db-shm
