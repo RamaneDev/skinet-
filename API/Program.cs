@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities.Identity;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +29,13 @@ namespace API
                     var context = services.GetRequiredService<StoreContext>();
                     await context.Database.MigrateAsync();
                     await StoreContextSeed.SeedAsync(context, loggerFactory);
+
+                    
+                    var identityContext = services.GetRequiredService<StoreIdentityDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<StoreUser>>();
+                    await identityContext.Database.MigrateAsync();                   
+                    await StoreIdentityDbContextSeed.SeedUsersAsync(userManager);
+                   
                 }
                 catch (Exception e)
                 {
@@ -34,7 +44,7 @@ namespace API
                    logger.LogError(e, "An error occured during migration");
                 }
                 
-            }
+            } 
 
             host.Run();
 
