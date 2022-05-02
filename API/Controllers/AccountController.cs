@@ -14,15 +14,18 @@ namespace API.Controllers
         private readonly UserManager<StoreUser> _userManager;
         private readonly SignInManager<StoreUser> _singInManager;       
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
         
         public AccountController(UserManager<StoreUser> userManager,
                                  SignInManager<StoreUser> singInManager,                               
-                                 IMapper mapper
+                                 IMapper mapper,
+                                 ITokenService tokenService
                                 )
         {
             this._mapper = mapper;    
             this._singInManager = singInManager;
             this._userManager = userManager;
+            this._tokenService = tokenService;
         }
 
         [HttpGet("emailexists")]
@@ -45,7 +48,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = "Token",
+                Token = _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName
             };
         }
@@ -73,7 +76,7 @@ namespace API.Controllers
             return new UserDto
             {
                 DisplayName = user.DisplayName,
-                Token = "Token",
+                Token = _tokenService.CreateToken(user),
                 Email = user.Email
             };
             
