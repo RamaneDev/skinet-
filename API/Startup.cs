@@ -73,7 +73,9 @@ namespace API
             //app.UseMyMiddleware2();                  we can specify filters class in attribute for actions
             //                                         or in attribute of the controller to apply to all actions
             //                                         in this controller
-            // exp of calling : Midl1 -> filter 1 -> filter 2 -> MVC API -> filter 2 -> filter 1 -> Midl1            
+            // exp of calling : Midl1 -> filter 1 -> filter 2 -> MVC API -> filter 2 -> filter 1 -> Midl1
+
+            app.UseAuthentication();            
 
             app.UseAuthorization();
 
