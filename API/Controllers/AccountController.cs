@@ -53,6 +53,35 @@ namespace API.Controllers
             return await _userManager.FindByEmailAsync(email) != null;
         }
 
+
+        [Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<AddressDto>> GetUserAddress()
+        {
+             var email = User.FindFirst(ClaimTypes.Email);
+
+             var user = await _userManager.FindByEmailAsync(email.Value);
+
+             return _mapper.Map<Address, AddressDto>(user.Address);
+        }
+
+        [Authorize]
+        [HttpPut("address")]
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
+        {
+             var email = User.FindFirst(ClaimTypes.Email);
+
+             var user = await _userManager.FindByEmailAsync(email.Value);
+
+             user.Address = _mapper.Map<AddressDto, Address>(address);
+
+             var result = await _userManager.UpdateAsync(user);
+
+             if(result.Succeeded) return Ok(address);
+
+             return BadRequest("Problem updating the user !");
+        }
+        
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
