@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-center mt-5">
     <div class="col-3">
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
 
             <div class="form-floating">
-                <input type="email" class="form-control mb-2" id="floatingInput">
+                <input formControlName="email" type="email" class="form-control mb-2" id="floatingInput">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control mb-4" id="floatingPassword">
+                <input formControlName="password" type="password" class="form-control mb-4" id="floatingPassword">
                 <label for="floatingPassword">Password</label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
