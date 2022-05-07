@@ -16,10 +16,9 @@ export class AccountService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  loadCurrentUser(token: string) {
+  loadCurrentUser(token: string) {    
     let headers = new HttpHeaders();
-    headers.set('Authorizatoin', 'Bearer ${token}');
-
+    headers = headers.set('Authorization', `Bearer ${token}`);   
     return this.http.get(this.baseUrl + 'account', {headers}).pipe(
       map((user: IUser) => {
         if(user) {
@@ -29,6 +28,10 @@ export class AccountService {
       })
     )
 
+  }
+
+  getCurrentUserValue() {
+    this.currentUserSource.value;
   }
 
   login(values: any) {
@@ -65,14 +68,14 @@ export class AccountService {
 
   getUserAddress(token:string) {
     let headers = new HttpHeaders();
-    headers.set('Authorizatoin', 'Bearer ${token}');
+    headers.set('Authorization', `Bearer ${token}`);
 
     return this.http.get(this.baseUrl + 'account/address', {headers});
   }
 
   updateUserAddress(address: IAddress, token:string) {
     let headers = new HttpHeaders();
-    headers.set('Authorizatoin', 'Bearer ${token}');
+    headers.set('Authorization', `Bearer ${token}`);
 
     return this.http.put(this.baseUrl + 'account/address', address, {headers})
   }
