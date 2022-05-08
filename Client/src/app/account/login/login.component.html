@@ -3,15 +3,10 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
 
-            <div class="form-floating">
-                <input formControlName="email" type="email" class="form-control mb-2" id="floatingInput">
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input formControlName="password" type="password" class="form-control mb-4" id="floatingPassword">
-                <label for="floatingPassword">Password</label>
-            </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
+            <app-text-input formControlName="password" [label]="'Password'" [type]="'password'"></app-text-input>
+            
+            <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
     </div>
 </div>
