@@ -15,7 +15,7 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
  
-           
+            services.AddScoped<IOrderService, OrderService>();
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IProductRepository, ProductRepository>();
