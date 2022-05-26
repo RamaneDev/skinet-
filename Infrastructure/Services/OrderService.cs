@@ -9,21 +9,22 @@ namespace Infrastructure.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IGenericRepository<Order> orderRepo;
-        private readonly IGenericRepository<DeliveryMethod> dmRepo;
-        private readonly IGenericRepository<Product> pRepo;
+       // private readonly IGenericRepository<Order> orderRepo;
+       // private readonly IGenericRepository<DeliveryMethod> dmRepo;
+       // private readonly IGenericRepository<Product> pRepo;
         private readonly IBasketRepository basketRepo;
+        private readonly IUnitOfWork _unitOfWork;
 
         public OrderService(IGenericRepository<Order> orderRepo,
                             IGenericRepository<DeliveryMethod> dmRepo,
                             IGenericRepository<Product> pRepo,
-                            IBasketRepository basketRepo)
-        {
-            this.pRepo = pRepo;
+                            IBasketRepository basketRepo,
+                            IUnitOfWork unitOfWork)
+        {     
             this.basketRepo = basketRepo;
-            this.orderRepo = orderRepo;
-            this.dmRepo = dmRepo;
+            this._unitOfWork = unitOfWork;
         }
+         
 
         public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, Address shippingAddress)
         {
@@ -36,7 +37,7 @@ namespace Infrastructure.Services
             var items = new List<OrderItem>();
             foreach (var item in basket.Items)
             {
-                var productItem = await pRepo.GetByIdAsync(item.Id);
+                var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
                 var itemOrdered = new ProductItemOrdred(productItem.Id, productItem.Name, productItem.PictureUrl);
                 var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity);
                 items.Add(orderItem);
@@ -44,7 +45,7 @@ namespace Infrastructure.Services
 
             // get deliveryMethode
 
-            var dm = await dmRepo.GetByIdAsync(deliveryMethodId);
+            var dm = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
             // calcul subtotal
 
