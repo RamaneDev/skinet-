@@ -20,7 +20,7 @@ namespace Infrastructure.Data
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
             return await ApplySecification(spec).CountAsync();
-        }
+        }       
 
         public async Task<T> GetByIdAsync(int id)
         {
@@ -41,10 +41,27 @@ namespace Infrastructure.Data
         {
             return await ApplySecification(spec).ToListAsync();
         }
-
+        
         private IQueryable<T> ApplySecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+
+        public void Update(T entity)
+        {
+            _context.Set<T>().Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+               _context.Set<T>().Remove(entity);
+        }
+
+        public void Add(T entity)
+        {
+           _context.Set<T>().Add(entity);
+        }
+
     }
 }
