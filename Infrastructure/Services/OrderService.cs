@@ -55,8 +55,18 @@ namespace Infrastructure.Services
             // create order
 
             var order = new Order(items, buyerEmail, shippingAddress, dm, subtotal);
+            _unitOfWork.Repository<Order>().Add(order);
 
             // save to db 
+
+            var result = await _unitOfWork.Complete();
+
+            if(result <=0) return null;
+
+            // delete basket
+            
+            await basketRepo.DeleteBasketAsync(basketId);
+
 
             // return order
 
