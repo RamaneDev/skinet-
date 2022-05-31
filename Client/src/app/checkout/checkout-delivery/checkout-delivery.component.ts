@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { IDeliveryMethod } from 'src/app/shared/models/DeliveryMethod';
+import { CheckoutService } from '../checkout.service';
 
 @Component({
   selector: 'app-checkout-delivery',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutDeliveryComponent implements OnInit {
 
-  constructor() { }
+  @Input() checkoutForm: FormGroup;
+  deliveryMethods: IDeliveryMethod[];
+
+  constructor(private checkoutService: CheckoutService) { }
 
   ngOnInit(): void {
+    this.checkoutService.getDeliveryMethods().subscribe({
+      next: (dm: IDeliveryMethod[]) => this.deliveryMethods = dm,
+      error: (error) => console.log(error)
+    });
   }
 
 }
