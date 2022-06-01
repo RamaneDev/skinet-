@@ -67,18 +67,12 @@ export class AccountService {
     return this.http.get(this.baseUrl + 'account/emailExists?email=' + email);
   }
 
-  getUserAddress(token:string) {
-    let headers = new HttpHeaders();
-    headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.get(this.baseUrl + 'account/address', {headers});
+  getUserAddress() { 
+    return this.http.get(this.baseUrl + 'account/address');
   }
 
-  updateUserAddress(address: IAddress, token:string) {
-    let headers = new HttpHeaders();
-    headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.put(this.baseUrl + 'account/address', address, {headers})
+  updateUserAddress(address: IAddress) {
+    return this.http.put(this.baseUrl + 'account/address', address)
   }
   
 }
