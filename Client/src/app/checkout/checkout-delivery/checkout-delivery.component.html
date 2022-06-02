@@ -1,5 +1,6 @@
 <div class="mt-4" [formGroup]="this.checkoutForm">
-    <div class="row" formGroupName="deliveryForm">
+    <h4 class="mb-3">Choose your delivery method</h4>
+    <div class="row ml-5" formGroupName="deliveryForm">
         <div class="col-6 form-group" *ngFor="let method of this.deliveryMethods">
             <input 
                 (click)="this.setShippingPrice(method)"
@@ -17,7 +18,7 @@
 
 <div class="float-none d-flex justify-content-between flex-column flex-lg-row mb-5">
     <button class="btn btn-outline-primary" cdkStepperPrevious>
-      <i class="fa fa-angle-left"></i>Back to Address
+      <i class="fa fa-angle-left"></i> Back to Address
     </button>
  
     <button class="btn btn-primary" cdkStepperNext>
