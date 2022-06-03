@@ -29,11 +29,12 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
 
           if(error.status === 401) {           
-              this.toastr.error(error.error.message, error.error.statusCode);           
+              //this.toastr.error(error.error.message, error.error.statusCode);
+              this.route.navigateByUrl('/not-autorized');           
           }
 
           if(error.status === 404) {        
-            this.route.navigateByUrl('/not-found',);
+            this.route.navigateByUrl('/not-found');
           }            
           
           if(error.status === 500) {
