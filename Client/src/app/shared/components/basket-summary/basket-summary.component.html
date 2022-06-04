@@ -1,18 +1,18 @@
-<ng-container *ngIf="this.basket$ | async" >
-<div class="table-responsive">
-    <table class="table">                           
+<ng-container *ngIf="this.basket$ | async">
+<div class="table-responsive" >
+    <table class="table" [class.table-borderless]="!this.isBasket">                           
         <thead>
             <tr>
-                <th class="border-0" scope="col" [class.bg-light]="this.isBasket">
+                <th class="border-0 bg-light" scope="col">
                     <div class="p-2 px-3 text-uppercase align-middle">Product</div>
                 </th>
-                <th class="border-0" scope="col" [class.bg-light]="this.isBasket">
+                <th class="border-0 bg-light" scope="col">
                     <div class="p-2 text-uppercase">Price</div>
                 </th>
-                <th class="border-0" scope="col" [class.bg-light]="this.isBasket">
+                <th class="border-0 bg-light" scope="col">
                     <div class="p-2 text-uppercase">Quantity</div>
                 </th>
-                <th class="border-0" scope="col" [class.bg-light]="this.isBasket">
+                <th class="border-0 bg-light" scope="col">
                     <div class="p-2 text-uppercase">Total</div>
                 </th>
                 <th *ngIf="this.isBasket" class="border-0 bg-light" scope="col">
@@ -50,9 +50,9 @@
                         {{item.price * item.quantity}}                                       
                     </strong>
                 </td>
-                <td class="align-middle text-center">
+                <td class="align-middle text-center" *ngIf="this.isBasket">
                 <a>
-                   <button *ngIf="this.isBasket"  (click)="removeBasketItem(item)" class="btn-svg"><i class="fa fa-trash text-danger" style="font-size: 2em;">
+                   <button  (click)="removeBasketItem(item)" class="btn-svg"><i class="fa fa-trash text-danger" style="font-size: 2em;">
                     </i></button> 
                 </a>
                 </td>
