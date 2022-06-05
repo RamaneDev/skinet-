@@ -150,4 +150,11 @@ export class BasketService {
       type: item.productType
     };
   }
+
+
+  createPaymentIntent() {
+    return this.http.post(this.baseUrl + "payments/" + this.getCurrentBasketValue().id, {}).pipe(
+      map((basket: IBasket) => this.basketSource.next(basket))
+    )
+  }
 }
