@@ -9,3 +9,4 @@ Infrastructure/Infrastructure/obj
 *.db
 *.db-wal
 *.db-shm
+API/appsettings.json
