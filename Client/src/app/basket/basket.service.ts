@@ -32,7 +32,10 @@ export class BasketService {
 
   setShippingPrice(dm: IDeliveryMethod) {
     this.shipping = dm.price;
+    const basket = this.getCurrentBasketValue();
+    basket.deliveryMethodId = dm.id;
     this.calulateTotals();
+    this.setBasket(basket);
   }
 
 
