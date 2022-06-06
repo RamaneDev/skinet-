@@ -15,15 +15,18 @@ namespace Infrastructure.Services
        // private readonly IGenericRepository<Product> pRepo;
         private readonly IBasketRepository basketRepo;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPaymentService _paymentService;
 
         public OrderService(IGenericRepository<Order> orderRepo,
                             IGenericRepository<DeliveryMethod> dmRepo,
                             IGenericRepository<Product> pRepo,
                             IBasketRepository basketRepo,
-                            IUnitOfWork unitOfWork)
+                            IUnitOfWork unitOfWork,
+                            IPaymentService paymentService)
         {     
             this.basketRepo = basketRepo;
             this._unitOfWork = unitOfWork;
+            this._paymentService = paymentService;
         }
          
 
@@ -52,9 +55,19 @@ namespace Infrastructure.Services
 
             var subtotal = items.Sum(item => item.Price*item.Quantity);
 
+            // check if order exists
+            var spec = new OrderByPaymentIntentIdWithItemsSpecification(basket.PaymentIntentId);
+            var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+            if(existingOrder != null)
+            {
+                _unitOfWork.Repository<Order>().Delete(existingOrder);
+                await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId); 
+            }
+
             // create order
 
-            var order = new Order(items, buyerEmail, shippingAddress, dm, subtotal);
+            var order = new Order(items, buyerEmail, shippingAddress, dm, subtotal, basket.PaymentIntentId);
             _unitOfWork.Repository<Order>().Add(order);
 
             // save to db 
@@ -65,7 +78,7 @@ namespace Infrastructure.Services
 
             // delete basket
             
-            await basketRepo.DeleteBasketAsync(basketId);
+            // await basketRepo.DeleteBasketAsync(basketId); to move some where else
 
 
             // return order
