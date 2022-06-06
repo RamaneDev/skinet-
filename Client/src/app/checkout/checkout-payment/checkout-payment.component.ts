@@ -103,11 +103,18 @@ export class CheckoutPaymentComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private async createOrder(basket: IBasket) {
+    const orderTocreate = this.getOrderToCreate(basket);
+    return lastValueFrom(this.checkoutService.createOrder(orderTocreate));
+  }
+
   private getOrderToCreate(basket: IBasket): IOrderToCreate {
     return {
       basketId: basket.id,
-      deliveryMethodId: +this.checkoutForm.get('deliveryForm').get('deliveryMethod').value,
-      shipToAddress: this.checkoutForm.get('addressForm').value
-    }
- }
+      deliveryMethodId: +this.checkoutForm
+        .get('deliveryForm')
+        .get('deliveryMethod').value,
+      shipToAddress: this.checkoutForm.get('addressForm').value,
+    };
+  }
 }
