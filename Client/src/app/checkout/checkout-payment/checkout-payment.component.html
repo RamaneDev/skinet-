@@ -23,7 +23,10 @@
       <i class="fa fa-angle-left"></i> Back to Reveiw
     </button>
   
-    <button (click)="this.submitOrder()" class="btn btn-primary">
+    <button [disabled]="this.loading" (click)="this.submitOrder()" class="btn btn-primary">
       Submit Order <i class="fa fa-angle-right"></i>
+      <div *ngIf="this.loading" class="spinner-border spinner-border-sm loader ml-2" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
    </button>
   </div>
