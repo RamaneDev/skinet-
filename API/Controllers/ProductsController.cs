@@ -28,7 +28,7 @@ namespace API.Controllers
             this._prodcutRepo = prodcutRepo;
             this._repo = repo;
         }
-
+        [Cached(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
@@ -42,7 +42,7 @@ namespace API.Controllers
             return  _mapper.Map<Product, ProductToReturnDto>(product);          
         }
 
-
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProdcuts([FromQuery]ProductSpecParams productParams)
         {
@@ -60,12 +60,14 @@ namespace API.Controllers
             return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
+        [Cached(600)]
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProdcutBrands()
         {
             return Ok(await _repo.GetProductBrandsAsync());
         }
-
+        
+        [Cached(600)]
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProdcutTypes()
         {
