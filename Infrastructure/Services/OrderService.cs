@@ -56,7 +56,7 @@ namespace Infrastructure.Services
             var subtotal = items.Sum(item => item.Price*item.Quantity);
 
             // check if order exists
-            var spec = new OrderByPaymentIntentIdWithItemsSpecification(basket.PaymentIntentId);
+            var spec = new OrdersByPaymentIntentIdSpecification(basket.PaymentIntentId);
             var existingOrder = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
             if(existingOrder != null)
@@ -93,14 +93,14 @@ namespace Infrastructure.Services
 
         public async Task<Order> GetOrderByIdAsync(int id, string buyerEmail)
         {
-             var spec = new OrdersWithItemAndOrderingSpecification(id, buyerEmail);
+             var spec = new OrdersByPaymentIntentIdSpecification(id, buyerEmail);
 
             return await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
         }
 
         public async Task<IReadOnlyList<Order>> GetOrderForUsrAsync(string buyerEmail)
         {
-            var spec = new OrdersWithItemAndOrderingSpecification(buyerEmail);
+            var spec = new OrdersByPaymentIntentIdSpecification(buyerEmail);
 
             return await _unitOfWork.Repository<Order>().ListAsync(spec);
         }
