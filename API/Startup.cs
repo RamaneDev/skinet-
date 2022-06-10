@@ -8,6 +8,8 @@ using API.Middelwares;
 using API.Extensions;
 using StackExchange.Redis;
 using Infrastructure.Identity;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace API
 {
@@ -69,6 +71,12 @@ namespace API
 
             app.UseStaticFiles();
 
+            app.UseStaticFiles(new StaticFileOptions{
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Content")
+                ), RequestPath = "/content"
+            });
+
             //app.UseMyMiddleware(); test middelware / Filters executing inside middelwares arround actions
             //app.UseMyMiddleware2();                  we can specify filters class in attribute for actions
             //                                         or in attribute of the controller to apply to all actions
@@ -82,6 +90,8 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
