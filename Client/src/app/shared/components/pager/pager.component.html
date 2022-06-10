@@ -1,5 +1,6 @@
 <pagination          
 [itemsPerPage]="this.pageSize"
 [totalItems]="this.totalCount"
-(pageChanged)="onPagerChanged($event)"  >
+(pageChanged)="onPagerChanged($event)"
+[ngModel]="this.pageNumber" >
 </pagination>
