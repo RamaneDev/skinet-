@@ -1,0 +1,20 @@
+.list-group-item {
+    cursor: pointer;
+    border: none;
+    
+    font-size: 1.1em;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.active {
+       border-radius: 10px; 
+    }
+
+    &:not(.active):hover {
+        color: white;
+        background-color: #2fa4e779;
+        border-radius: 10px;
+    }
+}
