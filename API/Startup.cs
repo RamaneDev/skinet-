@@ -28,11 +28,11 @@ namespace API
         {
 
             services.AddControllers();            
-            services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<StoreContext>(x => x.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<StoreIdentityDbContext>(x => 
             {
-                x.UseSqlite(_configuration.GetConnectionString("IdentityConnection"));
+                x.UseNpgsql(_configuration.GetConnectionString("IdentityConnection"));
             });
             
             services.AddSingleton<IConnectionMultiplexer>(c => {
