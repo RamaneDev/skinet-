@@ -10,3 +10,4 @@ Infrastructure/Infrastructure/obj
 *.db-wal
 *.db-shm
 API/appsettings.json
+wwwroot
