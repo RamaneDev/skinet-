@@ -15,7 +15,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.5.61" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>  
+     <Content Include="Content\**" CopyToPublishDirectory="PreserveNewest" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 </Project>
