@@ -11,3 +11,4 @@ Infrastructure/Infrastructure/obj
 *.db-shm
 API/appsettings.json
 wwwroot
+publish
