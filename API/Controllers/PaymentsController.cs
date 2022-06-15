@@ -43,6 +43,8 @@ namespace API.Controllers
         [HttpPost("webhook")]
         public async Task<ActionResult> StripeWebhook()
         {
+            if(string.IsNullOrEmpty(_WhSecret)) _logger.LogError("WhSecret is empty !");
+            
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
             var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], _WhSecret);
@@ -54,15 +56,15 @@ namespace API.Controllers
             {
                 case "payment_intent.succeeded":
                     intent = (PaymentIntent)stripeEvent.Data.Object;
-                    _logger.LogInformation("Payment Succeeded: ", intent.Id);
+                    _logger.LogInformation("Payment Succeeded: {intentId}", intent.Id);
                     order = await _paymentService.UpdateOrderPaymentSucceeded(intent.Id);
-                    _logger.LogInformation("Order updated to payment received: ", order.Id);
+                    _logger.LogInformation("Order updated to payment received: {orderId}", order.Id);
                     break;
                 case "payment_intent.payment_failed":
                     intent = (PaymentIntent)stripeEvent.Data.Object;
-                    _logger.LogInformation("Payment Failed: ", intent.Id);
+                    _logger.LogInformation("Payment Failed: {intentId}", intent.Id);
                     order = await _paymentService.UpdateOrderPaymentFailed(intent.Id);
-                    _logger.LogInformation("Order updated to payment failed: ", order.Id);
+                    _logger.LogInformation("Order updated to payment failed: {orderId}", order.Id);
                     break;
                 default:
                     break;
